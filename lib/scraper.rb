@@ -8,15 +8,15 @@ class Scraper
     html = temp_file.read
     doc = Nokogiri::HTML(html)
 
-    posts = doc.css(".question-summary").each do |post|
+    doc.css(".question-summary").each do |post|
       title = post.css("h3").text
       excerpt = post.css(".excerpt").text.gsub(/\r/, " ").gsub(/\n/, " ").strip
       link = post.css("h3 a @href").text
+      answered_status = post.css(".stats .status @class").text
       # votes = post.css(".votes")
-      # answered = post.css(".stats .status @class").text
       # views = post.css(".views")
 
-      question = {title: title, excerpt: excerpt, link: link}
+      question = {title: title, excerpt: excerpt, link: link, answered: answered_status}
       results_array << post
     end
 
@@ -24,7 +24,11 @@ class Scraper
   end
 
   def self.stackoverflow_post(post_link)
+    temp_file = open("https://stackoverflow.com#{post_link}")
+    html = temp_file.read
+    doc = Nokogiri::HTML(html)
 
+    doc.css
   end
 
 end
