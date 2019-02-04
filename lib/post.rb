@@ -1,5 +1,5 @@
 class Post
-  attr_accessor :title, :link, :excerpt, :answered_status
+  attr_accessor :title, :link, :excerpt, :answered_status, :user
   @@all = []
 
   def initialize(results_array)

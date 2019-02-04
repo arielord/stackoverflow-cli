@@ -13,10 +13,13 @@ class Scraper
       excerpt = post.css(".excerpt").text.gsub(/\r/, " ").gsub(/\n/, " ").strip
       link = post.css("h3 a @href").text
       answered_status = post.css(".stats .status @class").text
+      user_name = post.css(".user-info .user_details a").text
+      reputation_score = post.css(".user-info .reputation-score").text
+      user = [user_name, reputation_score]
       # votes = post.css(".votes")
       # views = post.css(".views")
 
-      question = {title: title, excerpt: excerpt, link: link, answered: answered_status}
+      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user}
       results_array << post
     end
 
@@ -28,7 +31,10 @@ class Scraper
     html = temp_file.read
     doc = Nokogiri::HTML(html)
 
-    doc.css
+    post = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
+    answers = doc.css("#answers .post-text").collect do |answer|
+      answer.text.gsub(/\r/,"").gsub(/\n/, "").strip
+    end
   end
 
 end
