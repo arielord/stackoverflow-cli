@@ -4,7 +4,7 @@ class Scraper
 
   def self.stackoverflow_results(search_tag)
     results_array = []
-    temp_file = open("https://stackoverflow.com/questions/tagged#{search_tag}")
+    temp_file = open("https://stackoverflow.com/questions/tagged/#{search_tag}")
     html = temp_file.read
     doc = Nokogiri::HTML(html)
 
@@ -20,7 +20,7 @@ class Scraper
       # views = post.css(".views")
 
       question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user}
-      results_array << post
+      results_array << question
     end
 
     results_array
