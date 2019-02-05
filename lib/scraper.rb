@@ -1,4 +1,5 @@
 #Scrape stackoverflow pages using tag queries
+require "open-uri"
 
 class Scraper
 
@@ -12,14 +13,14 @@ class Scraper
       title = post.css("h3").text
       excerpt = post.css(".excerpt").text.gsub(/\r/, " ").gsub(/\n/, " ").strip
       link = post.css("h3 a @href").text
-      answered_status = post.css(".stats .status @class").text
-      user_name = post.css(".user-info .user_details a").text
+      answered_status = post.css(".stats .status strong").text
+      user_name = post.css(".user_details a").text
       reputation_score = post.css(".user-info .reputation-score").text
-      user = [user_name, reputation_score]
+      #user = [user_name, reputation_score]
       # votes = post.css(".votes")
       # views = post.css(".views")
 
-      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user}
+      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user_name, reputation: reputation_score}
       results_array << question
     end
 

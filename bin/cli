@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative '../config/environment'
+
+puts Scraper.stackoverflow_results("ruby")[0]
+puts "Hello World"
