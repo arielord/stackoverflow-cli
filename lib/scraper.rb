@@ -16,7 +16,6 @@ class Scraper
       answered_status = post.css(".stats .status strong").text
       user_name = post.css(".user_details a").text
       reputation_score = post.css(".user-info .reputation-score").text
-      #user = [user_name, reputation_score]
       # votes = post.css(".votes")
       # views = post.css(".views")
 
@@ -32,10 +31,12 @@ class Scraper
     html = temp_file.read
     doc = Nokogiri::HTML(html)
 
-    post = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
+    question = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
     answers = doc.css("#answers .post-text").collect do |answer|
       answer.text.gsub(/\r/,"").gsub(/\n/, "").strip
     end
+
+    post_info = [question, answers]
   end
 
 end
