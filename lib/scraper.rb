@@ -3,21 +3,23 @@ require "open-uri"
 
 class Scraper
 
+  def self.create_nokogiri_object(url, search) #helper function
+    temp_file = open("#{url}#{search}")
+    html = temp_file.read
+    Nokogiri::HTML(html)
+  end
+
   def self.stackoverflow_results(search_tag)
     results_array = []
-    temp_file = open("https://stackoverflow.com/questions/tagged/#{search_tag}")
-    html = temp_file.read
-    doc = Nokogiri::HTML(html)
+    doc = create_nokogiri_object("https://stackoverflow.com/questions/tagged/", search_tag)
 
     doc.css(".question-summary").each do |post|
       title = post.css("h3").text
       excerpt = post.css(".excerpt").text.gsub(/\r/, " ").gsub(/\n/, " ").strip
       link = post.css("h3 a @href").text
       answered_status = post.css(".stats .status strong").text
-      user_name = post.css(".user_details a").text
+      user_name = post.css(".user-info div a").text
       reputation_score = post.css(".user-info .reputation-score").text
-      # votes = post.css(".votes")
-      # views = post.css(".views")
 
       question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user_name, reputation: reputation_score}
       results_array << question
@@ -27,9 +29,7 @@ class Scraper
   end
 
   def self.stackoverflow_post(post_link)
-    temp_file = open("https://stackoverflow.com#{post_link}")
-    html = temp_file.read
-    doc = Nokogiri::HTML(html)
+    doc = create_nokogiri_object("https://stackoverflow.com", post_link)
 
     question = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
     answers = doc.css("#answers .post-text").collect do |answer|
