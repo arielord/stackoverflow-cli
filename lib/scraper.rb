@@ -9,7 +9,7 @@ class Scraper
     Nokogiri::HTML(html)
   end
 
-  def self.stackoverflow_results(search_tag)
+  def self.stackoverflow_posts(search_tag)
     results_array = []
     doc = create_nokogiri_object("https://stackoverflow.com/questions/tagged/", search_tag)
 
@@ -28,7 +28,7 @@ class Scraper
     results_array
   end
 
-  def self.stackoverflow_post(post_link)
+  def self.stackoverflow_answers_and_info(post_link)
     doc = create_nokogiri_object("https://stackoverflow.com", post_link)
 
     username = doc.css(".user-info div a").text
