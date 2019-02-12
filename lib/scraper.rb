@@ -18,10 +18,10 @@ class Scraper
       excerpt = post.css(".excerpt").text.gsub(/\r/, " ").gsub(/\n/, " ").strip
       link = post.css("h3 a @href").text
       answered_status = post.css(".stats .status strong").text
-      user_name = post.css(".user-info div a").text
+      username = post.css(".user-info div a").text
       reputation_score = post.css(".user-info .reputation-score").text
 
-      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, user: user_name, reputation: reputation_score}
+      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, username: username, reputation: reputation_score}
       results_array << question
     end
 
@@ -31,12 +31,14 @@ class Scraper
   def self.stackoverflow_post(post_link)
     doc = create_nokogiri_object("https://stackoverflow.com", post_link)
 
+    username = doc.css(".user-info div a").text
+    reputation_score = doc.css(".user-info .reputation-score").text
     question = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
     answers = doc.css("#answers .post-text").collect do |answer|
       answer.text.gsub(/\r/,"").gsub(/\n/, "").strip
     end
 
-    post_info = [question, answers]
+    post_info = {question: question, answers: answers, username: username, reputation: reputation_score}
   end
 
 end
