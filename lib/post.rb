@@ -1,4 +1,5 @@
 class Post
+  extend Concerns::Findable
   attr_accessor :title, :link, :excerpt, :answered, :user, :reputation
   @@all = []
 
