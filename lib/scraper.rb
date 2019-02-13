@@ -20,9 +20,10 @@ class Scraper
       answered_status = post.css(".stats .status strong").text
       username = post.css(".user-info div a").text
       reputation_score = post.css(".user-info .reputation-score").text
+      question = Scraper.stackoverflow_answers_and_info(link)[:question]
 
-      question = {title: title, excerpt: excerpt, link: link, answered: answered_status, username: username, reputation: reputation_score}
-      results_array << question
+      question_hash = {title: title, excerpt: excerpt, question: question, link: link, answered: answered_status, username: username, reputation: reputation_score}
+      results_array << question_hash
     end
 
     results_array
