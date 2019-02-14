@@ -8,7 +8,7 @@ module Concerns::Findable
   end
 
   def find_by_reputation_score(score)
-    self.all.find {|item| item.reputation >= score}
+    self.all.find {|item| item.reputation. >= score}
   end
 
 end

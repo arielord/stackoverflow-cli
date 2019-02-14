@@ -19,7 +19,7 @@ class Scraper
       link = post.css("h3 a @href").text
       answered_status = post.css(".stats .status strong").text
       username = post.css(".user-info div a").text
-      reputation_score = post.css(".user-info .reputation-score").text
+      reputation_score = post.css(".user-info .reputation-score").text.to_i
       question = Scraper.stackoverflow_answers_and_info(link)[:question]
 
       question_hash = {title: title, excerpt: excerpt, question: question, link: link, answered: answered_status, username: username, reputation: reputation_score}
@@ -33,7 +33,7 @@ class Scraper
     doc = create_nokogiri_object("https://stackoverflow.com", post_link)
 
     username = doc.css(".user-info div a").text
-    reputation_score = doc.css(".user-info .reputation-score").text
+    reputation_score = doc.css(".user-info .reputation-score").text.to_i
     question = doc.css(".question .post-text").text.gsub(/\r/,"").gsub(/\n/, "").strip
     answers = doc.css("#answers .post-text").collect do |answer|
       answer.text.gsub(/\r/,"").gsub(/\n/, "").strip
