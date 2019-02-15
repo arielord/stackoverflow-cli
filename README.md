@@ -1,3 +1,7 @@
+# About
+
+A simple Command Line Interface For Stackoverflow.com. Specifically using Nokogiri and Open-Uri to scrape the website. This CLI application will allow you to search for any tags and return various posts related to the search tag.
+
 # Stackoverflow::Cli
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stackoverflow/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
