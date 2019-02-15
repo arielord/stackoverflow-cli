@@ -9,6 +9,7 @@ class Answer
     answers_hash.each {|key, value| self.send("#{key}=", value)}
     user = User.create(self.username, self.reputation)
     self.user = user
+    add_answer_to_post
     @@all << self
   end
 
@@ -20,6 +21,11 @@ class Answer
       @user = User.find_by_username(self.username)
       @user.add_answer(self)
     end
+  end
+
+  def add_answer_to_post
+    post = Post.all.find {|post| post.question == self.question}
+    post.answers << self unless post.answers.find {|ans| ans.answer == self.answer}
   end
 
   def self.create_from_collection(answer_array)

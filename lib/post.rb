@@ -3,9 +3,9 @@ class Post
   attr_accessor :title, :question, :link, :excerpt, :answered, :username, :reputation, :answers, :user
   @@all = []
 
-  def initialize(post_hash, answers = nil)
+  def initialize(post_hash)
     post_hash.each {|key, value| self.send("#{key}=", value)}
-    @answers = answers
+    @answers = []
     user = User.create(self.username, self.reputation)
     self.user = user
     @@all << self
