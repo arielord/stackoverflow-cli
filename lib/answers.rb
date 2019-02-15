@@ -26,6 +26,7 @@ class Answer
   def add_answer_to_post
     post = Post.all.find {|post| post.question == self.question}
     post.answers << self unless post.answers.find {|ans| ans.answer == self.answer}
+    self.post = post
   end
 
   def self.create_from_collection(answer_array)
