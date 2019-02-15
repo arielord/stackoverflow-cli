@@ -17,6 +17,12 @@ class User
     end
   end
 
+  def add_answer(answer)
+    if !@answers.find {|ans| ans.answer == answer.answer}
+      @answers << answer
+    end
+  end
+
   def self.create(username, reputation)
     User.new(username, reputation) unless User.find_by_username(username)
   end

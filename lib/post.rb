@@ -21,10 +21,6 @@ class Post
     end
   end
 
-  # def find_by_title(title)
-  #   @@all.find {|title_name| title_name = title}
-  # end
-
   def self.create_from_collection(results_array)
     results_array.each {|post| Post.new(post)}
   end
