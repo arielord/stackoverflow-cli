@@ -26,7 +26,7 @@ class Post
   end
 
   def self.all
-    @@all.uniq{|post| post.title}
+    @@all = @@all.uniq{|post| post.title}
   end
 
 end
