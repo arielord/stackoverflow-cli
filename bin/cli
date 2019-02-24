@@ -2,5 +2,4 @@
 
 require_relative '../config/environment'
 
-puts Scraper.stackoverflow_results("ruby")[0]
-puts "Hello World"
+Menu.new
