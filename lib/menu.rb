@@ -99,7 +99,7 @@ class Menu
     response = ""
     until response == "exit"
       @page = 1
-      response = @prompt.ask("Please enter a tag to search for on stackoverflow.com", default: "or type \"exit\" to exit")
+      response = @prompt.ask("Please enter a tag to search for on stackoverflow.com \nor hit enter to", default: "exit")
       if response != "exit"
         flag = true
         begin
@@ -108,6 +108,7 @@ class Menu
           Post.create_from_collection(posts)
           @collection = Post.all
         rescue OpenURI::HTTPError => ex
+          system("clear")
           flag = false
           puts "Tag not found. Please try again."
         end
