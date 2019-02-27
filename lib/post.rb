@@ -1,6 +1,6 @@
 class Post
   extend Concerns::Findable
-  attr_accessor :title, :question, :link, :excerpt, :answered, :username, :reputation, :answers, :user
+  attr_accessor :title, :question, :link, :excerpt, :answered, :username, :reputation, :answers, :user, :tag
   @@all = []
 
   def initialize(post_hash)

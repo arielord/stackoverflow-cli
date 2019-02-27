@@ -102,16 +102,20 @@ class Menu
       response = @prompt.ask("Please enter a tag to search for on stackoverflow.com \nor hit enter to", default: "exit")
       if response != "exit"
         flag = true
-        begin
-          Post.clear
-          posts = Scraper.stackoverflow_posts(format_input_for_search(response))
-          Post.create_from_collection(posts)
-          @collection = Post.all
-        rescue OpenURI::HTTPError => ex
-          system("clear")
-          flag = false
-          puts "Tag not found. Please try again."
+        if !Post.all.any? {|post| post.tag == response}
+          begin
+            posts = Scraper.stackoverflow_posts(format_input_for_search(response))
+            Post.create_from_collection(posts)
+          rescue OpenURI::HTTPError => ex
+            system("clear")
+            flag = false
+            puts "Tag not found. Please try again."
+          end
         end
+          @collection = Post.all.find_all do |item|
+            item.tag == response
+          end
+
         if flag
           system("clear")
           input = event_listener(first_page)

@@ -27,7 +27,7 @@ class Scraper
       reputation_score = post.css(".user-info .reputation-score").text.gsub(/,/,"").to_i
       question = get_question(link)
 
-      question_hash = {title: title, excerpt: excerpt, question: question, link: link, answered: answered_status, username: username, reputation: reputation_score}
+      question_hash = {title: title, excerpt: excerpt, question: question, link: link, answered: answered_status, username: username, reputation: reputation_score, tag: search_tag}
       results_array << question_hash
     end
 
